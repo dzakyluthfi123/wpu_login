@@ -6,8 +6,7 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
-        $this->load->database();
+        is_logged_in();  // Memanggil fungsi untuk memastikan user login
     }
 
     public function index()
@@ -15,6 +14,7 @@ class User extends CI_Controller
         $data['title'] = 'My Profile';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+        // Memuat view dengan data
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);

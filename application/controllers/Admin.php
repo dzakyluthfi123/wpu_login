@@ -6,19 +6,17 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
-        $this->load->database();
-
-        if (!$this->session->userdata('email')) {
-            redirect('auth');
-        }
+        // Memanggil fungsi is_logged_in() dari helper
+        is_logged_in();
     }
 
     public function index()
     {
         $data['title'] = 'Admin Dashboard';
+        // Mengambil data pengguna dari session
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
+        // Memuat view
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
