@@ -7,25 +7,26 @@
             <!-- Pesan flashdata untuk notifikasi sukses/gagal -->
             <?= $this->session->flashdata('message'); ?>
 
-            <!-- Tombol untuk memicu modal tambah menu -->
-            <a href="" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newMenuModal">Add New Menu</a>
+            <!-- Tombol untuk memicu modal tambah role -->
+            <a href="" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newRoleModal">Add New Role</a>
 
-            <!-- Tabel daftar menu -->
+            <!-- Tabel daftar role -->
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Menu</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (isset($menu) && !empty($menu)): ?>
-                        <?php foreach ($menu as $m): ?>
+                    <?php if (isset($roles) && !empty($roles)): ?>
+                        <?php foreach ($roles as $role): ?>
                             <tr>
-                                <th scope="row"><?= $m['id']; ?></th>
-                                <td><?= $m['menu']; ?></td>
+                                <th scope="row"><?= $role['id']; ?></th>
+                                <td><?= $role['role']; ?></td>
                                 <td>
+                                    <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-warning">access</a>
                                     <a href="" class="badge badge-success">edit</a>
                                     <a href="" class="badge badge-danger">delete</a>
                                 </td>
@@ -33,7 +34,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="3">No menu available</td>
+                            <td colspan="3">No roles available</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -43,18 +44,18 @@
     </div>
 </div>
 
-<!-- Modal untuk menambah menu baru -->
-<div class="modal fade" id="newMenuModal" tabindex="-1" aria-labelledby="newMenuModalLabel" aria-hidden="true">
+<!-- Modal untuk menambah role baru -->
+<div class="modal fade" id="newRoleModal" tabindex="-1" aria-labelledby="newRoleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newMenuModalLabel">Add New Menu</h5>
+                <h5 class="modal-title" id="newRoleModalLabel">Add New Role</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= base_url('menu'); ?>" method="post">
+            <form action="<?= base_url('admin/role'); ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="menu" name="menu" placeholder="Menu name" required>
+                        <input type="text" class="form-control" id="role" name="role" placeholder="Role name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
