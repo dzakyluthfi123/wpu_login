@@ -4,11 +4,8 @@
     <div class="row">
         <div class="col-lg-6">
 
-            <!-- Pesan flashdata untuk notifikasi sukses/gagal -->
+            <!-- Pesan error atau sukses (jika ada) -->
             <?= $this->session->flashdata('message'); ?>
-
-            <!-- Tombol untuk memicu modal tambah role -->
-            <a href="" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newRoleModal">Add New Role</a>
 
             <!-- Tabel daftar role -->
             <table class="table table-hover">
@@ -26,7 +23,6 @@
                                 <th scope="row"><?= $role['id']; ?></th>
                                 <td><?= $role['role']; ?></td>
                                 <td>
-                                    <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-warning">access</a>
                                     <a href="" class="badge badge-success">edit</a>
                                     <a href="" class="badge badge-danger">delete</a>
                                 </td>
@@ -40,11 +36,14 @@
                 </tbody>
             </table>
 
+            <!-- Tombol untuk menambah role -->
+            <a href="#" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newRoleModal">Add New Role</a>
+
         </div>
     </div>
 </div>
 
-<!-- Modal untuk menambah role baru -->
+<!-- Modal untuk menambah role -->
 <div class="modal fade" id="newRoleModal" tabindex="-1" aria-labelledby="newRoleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -52,15 +51,16 @@
                 <h5 class="modal-title" id="newRoleModalLabel">Add New Role</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= base_url('admin/role'); ?>" method="post">
+            <form action="<?= base_url('role/add'); ?>" method="post">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="role" name="role" placeholder="Role name" required>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role Name</label>
+                        <input type="text" class="form-control" id="role" name="role" placeholder="Enter role name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">Add Role</button>
                 </div>
             </form>
         </div>

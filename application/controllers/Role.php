@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Role extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -20,7 +19,7 @@ class Role extends CI_Controller
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
-        $this->load->view('role/index', $data); // Ganti sesuai dengan nama file view
+        $this->load->view('role/index', $data); // Pastikan nama file view benar
         $this->load->view('templates/footer');
     }
 
@@ -32,16 +31,26 @@ class Role extends CI_Controller
             // Kembali ke halaman index jika validasi gagal
             $this->index();
         } else {
-            // Jika validasi berhasil, tambah role ke database
-            $roleData = [
-                'role' => $this->input->post('role')
-            ];
-            $this->db->insert('roles', $roleData);
-            // Set flashdata untuk pesan sukses
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New role added!</div>');
-            redirect('role'); // Redirect ke halaman role
+            // Jika validasi berhasil, cek apakah role sudah ada
+            $roleName = $this->input->post('role');
+
+            // Cek apakah role sudah ada
+            $existingRole = $this->Role_model->getRoleByName($roleName);
+
+            if ($existingRole) {
+                // Jika role sudah ada, set flashdata untuk pesan error
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Role already exists!</div>');
+                redirect('role'); // Redirect ke halaman role
+            } else {
+                // Jika role belum ada, tambah role ke database
+                $roleData = [
+                    'role' => $roleName
+                ];
+                $this->db->insert('roles', $roleData);
+                // Set flashdata untuk pesan sukses
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New role added!</div>');
+                redirect('role'); // Redirect ke halaman role
+            }
         }
     }
-
-    // Metode lain jika diperlukan untuk menambah/mengedit role
 }
